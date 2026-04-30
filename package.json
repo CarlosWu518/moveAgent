@@ -1,0 +1,31 @@
+{
+  "name": "refactor-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Old yudao module -> new ERP (erp-backend / erp-web) scaffold generator. Includes backend 8-piece, frontend 3-piece, and SQL Server idempotent diff.",
+  "type": "module",
+  "bin": {
+    "refactor-agent": "./bin/refactor-agent.mjs"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "demo": "tsx src/index.ts demo",
+    "demo:backend": "tsx src/index.ts migrate:backend ../2.0Old/junma-backend/yudao-module-data/yudao-module-data-biz/src/main/java/cn/iocoder/yudao/module/data/controller/admin/companyentity/CompanyEntityController.java --module erp-base --table-prefix erp_ --perm-prefix erp:company-entity --route /erp/company-entity --out ./output/company-entity-backend",
+    "demo:frontend": "tsx src/index.ts migrate:frontend ../2.0Old/junma-frontend/src/views/data/companyentity/index.vue --api ../2.0Old/junma-frontend/src/api/data/companyentity/index.ts --route /erp/company-entity --perm-prefix erp:company-entity --out ./output/company-entity-frontend",
+    "demo:sql": "tsx src/index.ts diff:table ../2.0Old/junma-backend/yudao-module-data/yudao-module-data-biz/src/main/java/cn/iocoder/yudao/module/data/dal/dataobject/companyentity/CompanyEntityDO.java ../erp-backend/yudao-module-erp-base/yudao-module-erp-base-biz/src/main/java/cn/iocoder/yudao/module/erp/base/dal/dataobject/CompanyEntityDO.java --new-table erp_company_entity --out ./output/company-entity-diff.sql"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.4.27",
+    "commander": "^12.1.0",
+    "kleur": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
